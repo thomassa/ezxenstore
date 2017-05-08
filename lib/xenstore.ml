@@ -99,7 +99,15 @@ module Xs = struct
   }
   let with_xs f = Client.immediate (get_client ()) (fun h -> f (ops h))
   let wait f = Client.wait (get_client ()) (fun h -> f (ops h))
+
+  (* This transaction function is deprecated: use transaction_attempts or transaction_one_try instead. *)
   let transaction _ f = Client.transaction (get_client ()) (fun h -> f (ops h))
+
+  let transaction_attempts attempts f =
+    Client.transaction_attempts attempts (get_client ()) (fun h -> f (ops h))
+
+  let transaction_one_try f =
+    Client.transaction_one_try (get_client ()) (fun h -> f (ops h))
 
 end
 
